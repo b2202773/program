@@ -11,14 +11,14 @@ a2048::a2048() {
 		}
 	}
 }
-HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);     //Àò¨ú±±¨î¥N½X
-void mouse(HANDLE h, int x, int y){            //±±¨î´å¼Ğªº¨ç¦¡	
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);     //ç²å–æ§åˆ¶ä»£ç¢¼
+void mouse(HANDLE h, int x, int y){            //æ§åˆ¶æ¸¸æ¨™çš„å‡½å¼	
 	COORD m;
 	m.X = x;
 	m.Y = y;
 	SetConsoleCursorPosition(h, m);
 }
-void a2048::makeframe(){                       //¦L®Ø¬[
+void a2048::makeframe(){                       //å°æ¡†æ¶
 
 	mouse(h, 0, 0);
 	cout << endl;
@@ -32,7 +32,7 @@ void a2048::makeframe(){                       //¦L®Ø¬[
 	cout << "|     |     |     |      |" << endl;
 	cout << "--------------------------" << endl;
 }
-void a2048::printnum() {                        //¦L¼Æ¦r
+void a2048::printnum() {                        //å°æ•¸å­—
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			int x = 6 * j + 3;  
@@ -42,7 +42,7 @@ void a2048::printnum() {                        //¦L¼Æ¦r
 		}
 	}
 }
-void a2048::creatnum(){     //ÀH¾÷²£¥Í 2 ©Î 4
+void a2048::creatnum(){     //éš¨æ©Ÿç”¢ç”Ÿ 2 æˆ– 4
 	int i, j, num;
 	srand(time(0));                   
 	i = (rand() % 4);
@@ -61,7 +61,7 @@ void a2048::creatnum(){     //ÀH¾÷²£¥Í 2 ©Î 4
 void a2048::upmove(){		
 	int k, tag = 0;
 	for (int i = 0; i < 4; i++){
-		int b[4] = { 0 };                 //©w¸q¤@­ÓÁ{®É°}¦C¨ÓÀx¦s¬Û¥[¤§«áªº±¡ªp
+		int b[4] = { 0 };                 //å®šç¾©ä¸€å€‹é™£åˆ—ä¾†å„²å­˜ç›¸åŠ ä¹‹å¾Œçš„æƒ…æ³
 		k = 0;
 		for (int j = 0; j < 3; j++){
 			if (a[j][i] != 0){
@@ -91,22 +91,22 @@ void a2048::upmove(){
 				break;
 			}
 		}
-		for (int j = 0; j < 4; j++)      //±Nµ²ªGÂĞ»\¦^¥h
+		for (int j = 0; j < 4; j++)      //å°‡ç›¸åŠ çµæœå‚³å›å»åŸæœ¬é™£åˆ—
 			a[j][i] = b[j];
 	}
 	if (tag)
 		creatnum();
 	
 }
-void a2048::downmove(){     //¤U²¾
+void a2048::downmove(){     //ä¸‹ç§»
 	int k, tag = 0;
-	for (int i = 0; i < 4; i++){           //±q¨C¤@¦C¶}©l
-		int b[4] = { 0 };				 //©w¸q¤@­ÓÁ{®É°}¦C¨ÓÀx¦s¬Û¥[¤§«áªº±¡ªp
+	for (int i = 0; i < 4; i++){           //å¾æ¯ä¸€åˆ—é–‹å§‹
+		int b[4] = { 0 };				 //å®šç¾©ä¸€å€‹é™£åˆ—ä¾†å„²å­˜ç›¸åŠ ä¹‹å¾Œçš„æƒ…æ³
 		k = 3;
 		for (int j = 3; j > 0; j--){
 			if (a[j][i] != 0){
 				int flag = 0;
-				for (int l = j - 1; l >= 0; l--){    //§ä¬O§_¦³¬Û¦Pªº¼Æ
+				for (int l = j - 1; l >= 0; l--){    //æ‰¾æ˜¯å¦æœ‰ç›¸åŒçš„æ•¸
 					if (a[l][i] != 0){
 						flag = 1;
 						if (a[l][i] == a[j][i]){
@@ -127,22 +127,22 @@ void a2048::downmove(){     //¤U²¾
 				}
 			}
 		}
-		b[k] = a[0][i];                 //³Ì«á¤@­Ó¨S¦³ÀË¬d¡A½á­È¹L¥h¡A¤£ºŞ¬O§_¬°0¡A³£µL©Ò¿×ªº
-		for (int j = 0; j < 4; j++){     //ÀË¬d¬O§_¦³²¾°Ê
+		b[k] = a[0][i];                
+		for (int j = 0; j < 4; j++){     //æª¢æŸ¥æ˜¯å¦æœ‰ç§»å‹•
 			if (a[j][i] != b[j]){
 				tag = 1;
 				break;
 			}
 		}
-		for (int j = 0; j < 4; j++)    //±Nµ²ªGÂĞ»\¦^¥h
+		for (int j = 0; j < 4; j++)     //å°‡ç›¸åŠ çµæœå‚³å›å»åŸæœ¬é™£åˆ—
 			a[j][i] = b[j];
 	}
-	if (tag)                          //¦s¦b²¾°Ê¡A²£¥Í·sªº¼Æ
+	if (tag)                          //æœ‰ç§»å‹•ï¼Œç”¢ç”Ÿæ–°çš„æ•¸
 		creatnum();
 
 }
 
-void a2048::leftmove() {    //¥ª²¾
+void a2048::leftmove() {    //å·¦ç§»
 	int k, tag = 0;
 	for (int i = 0; i < 4; i++){
 		int b[4] = { 0 };
@@ -182,7 +182,7 @@ void a2048::leftmove() {    //¥ª²¾
 		creatnum();
 }
 	
-void a2048::rightmove(){    //¥k²¾
+void a2048::rightmove(){    //å³ç§»
 	int k, tag = 0;
 	for (int i = 0; i < 4; i++){
 		int b[4] = { 0 };
@@ -224,9 +224,9 @@ void a2048::rightmove(){    //¥k²¾
 		creatnum();
 }
 
-void a2048::clean(){		//²M²z¦X±¼ªº¼Æ¦r	
+void a2048::clean(){		//æ¸…ç†åˆæ‰çš„æ•¸å­—	
 	int k = 0, l = 0;
-	for (int i = 2; i < 21, k < 4; i = i + 6){    //§ä¨ì¹ïÀ³ªº®Ø¡A¿é¤JªÅ®æ
+	for (int i = 2; i < 21, k < 4; i = i + 6){    //æ‰¾åˆ°å°æ‡‰çš„æ¡†ï¼Œè¼¸å…¥ç©ºæ ¼
 		l = 0;
 		for (int j = 2; j < 9; j = j + 2){
 			mouse(h, i, j);
@@ -236,9 +236,9 @@ void a2048::clean(){		//²M²z¦X±¼ªº¼Æ¦r
 		k++;
 	}
 }
-int a2048::cheak(){			//ÀË¬d¦³¨S¦³µ²§ô
+int a2048::cheak(){			//æª¢æŸ¥æœ‰æ²’æœ‰çµæŸ
 	int i, j, flag = 0, tag = 0;
-	for (i = 0; i < 4; i++){                  //ÀË¬d¬O§_ÁÙ¦³¦ì¸m¡A¦³¡Atag = 1
+	for (i = 0; i < 4; i++){                  //æª¢æŸ¥æ˜¯å¦é‚„æœ‰ä½ç½®ï¼Œæœ‰ï¼Œtag = 1
 		for (j = 0; j < 4; j++){
 			if (a[i][j] == 0){
 				tag = 1;
@@ -248,9 +248,9 @@ int a2048::cheak(){			//ÀË¬d¦³¨S¦³µ²§ô
 		if (tag == 1)
 			break;
 	}
-	if (tag)                               //¦³¡Aªğ¦^1
+	if (tag)                               //æœ‰ï¼Œè¿”å›1
 		return 1;
-	for (i = 0; i < 4; i++){                //ÀË¬d¥ª¥kªº®æ¤l¬O§_¦³¬Ûµ¥¡A¬O¡Aflag = 1¡A°h¥X°j°é
+	for (i = 0; i < 4; i++){                //æª¢æŸ¥å·¦å³çš„æ ¼å­æ˜¯å¦æœ‰ç›¸ç­‰ï¼Œæ˜¯ï¼Œflag = 1ï¼Œé€€å‡ºè¿´åœˆ
 		for (j = 0; j < 3; j++){
 			if (a[i][j] == a[i][j + 1]){
 				flag = 1;
@@ -260,7 +260,7 @@ int a2048::cheak(){			//ÀË¬d¦³¨S¦³µ²§ô
 		if (flag == 1)
 			break;
 	}
-	for (j = 0; j < 4; j++){               //ÀË¬d¤W¤Uªº®æ¤l¬O§_¦³·Qµ¥¡A¬O¡Aflag = 1¡A°h¥X°j°é
+	for (j = 0; j < 4; j++){               //æª¢æŸ¥ä¸Šä¸‹çš„æ ¼å­æ˜¯å¦æœ‰æƒ³ç­‰ï¼Œæ˜¯ï¼Œflag = 1ï¼Œé€€å‡ºè¿´åœˆ
 	
 		for (i = 0; i < 3; i++){
 			if (a[i][j] == a[i + 1][j]){
@@ -271,8 +271,8 @@ int a2048::cheak(){			//ÀË¬d¦³¨S¦³µ²§ô
 		if (flag == 1)
 			break;
 	}
-	if (tag == 0 && flag == 0)            //flag = 0 ©M tag = 0¡A¹CÀ¸µ²§ô
+	if (tag == 0 && flag == 0)            //flag = 0 å’Œ tag = 0ï¼ŒéŠæˆ²çµæŸ
 		return 0;
-	else                                  //§_«h¡AÄ~Äò¹CÀ¸
+	else                                  //å¦å‰‡ï¼Œç¹¼çºŒéŠæˆ²
 		return 1;
 }
